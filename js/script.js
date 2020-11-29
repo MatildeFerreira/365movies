@@ -62,7 +62,7 @@ $("#bto-see").click(function () {
 //PÁGINA WATCHED - INICIO
 
 ////Revelar mais informação do filme visto
-$(document).on('mousedown touchstart', '.all', function (e) {
+$(document).on('mousedown', '.all', function (e) {
 	e.stopPropagation();
 	$(this).find(".extra").slideToggle(0);
 });
@@ -447,7 +447,7 @@ $("#umedit").click(function () {
 //Posição do click
 var pos = 0;
 //Quando se clica no filme
-$(document).on('mousedown touchstart', '.all', function (a) {
+$(document).on('mousedown', '.all', function (a) {
 	console.log("event start")
 	a.stopPropagation();
 	//Filme clicado muda de classe
@@ -462,7 +462,7 @@ $(document).on('mousedown touchstart', '.all', function (a) {
 
 	//Mecânica slide
 	//Quando o rato se movimenta
-	$(document).on('mousemove touchmove', '.allmoving', function (e) {
+	$(document).on('mousemove', '.allmoving', function (e) {
 
 		e.stopPropagation();
 		//Esconder .extra dos filmes (informações extra)
@@ -848,7 +848,7 @@ $("#closetosee").click(function () {
 //Posição do click
 var postosee = 0;
 //Quando se clica no filme
-$(document).on('mousedown touchstart', '.toseelist', function (a) {
+$(document).on('mousedown', '.toseelist', function (a) {
 	//Filme clicado muda de classe
 	$(this).addClass('allmovingtosee');
 	$(this).removeClass('toseelist');
@@ -861,7 +861,7 @@ $(document).on('mousedown touchstart', '.toseelist', function (a) {
 
 	//Mecânica slide
 	//Quando o rato se movimenta
-	$(document).on('mousemove touchmove', '.allmovingtosee', function (e) {
+	$(document).on('mousemove', '.allmovingtosee', function (e) {
 		e.stopPropagation();
 		//variável largura da lista
 		var widthTS = $(".allmovingtosee").width();
@@ -1060,7 +1060,7 @@ $(document).on('mousedown touchstart', '.toseelist', function (a) {
 	});
 });
 //Quando o rato é leventado
-$(document).on("mouseup touchend", function () {
+$(document).on("mouseup", function () {
 
 	//Filme em movimento volta a ser estático
 	$('.allmovingtosee').addClass('toseelist');
