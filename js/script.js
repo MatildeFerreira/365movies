@@ -215,7 +215,7 @@ $("#donewatched").click(function () {
 	if (date != "" && title != "" && platform != "" && review != false) {
 
 		//API omdB ->ir buscar o ano, o director e o género do filme
-		var url = "http://www.omdbapi.com/?t=" + title + "&apikey=abeb758c";
+		var url = "https://www.omdbapi.com/?t=" + title + "&apikey=abeb758c";
 		$.getJSON(url,
 			function (json) {
 
@@ -569,7 +569,7 @@ $(document).on('mousedown touchstart', '.all', function (a) {
 					if (dateedit != "" && titleedited != "" && platformedit != "" && reviewedit != false) {
 
 						//API omdB ->ir buscar o ano, o director e o género do filme
-						var url = "http://www.omdbapi.com/?t=" + titleedited + "&apikey=abeb758c";
+						var url = "https://www.omdbapi.com/?t=" + titleedited + "&apikey=abeb758c";
 						$.getJSON(url,
 							function (json) {
 
