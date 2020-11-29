@@ -1,0 +1,65 @@
+<!--WB2 2020/21 - Matilde Ferreira - P2 - 365 MOVIES - TO-SEE-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>365 Movies</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="css/css-reset.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+    <header>
+        <h1>365 Movies</h1>
+        <h2>to-see</h2>
+    </header>
+    <main>
+        <ol id="toseefirst">
+            <li class="toseetitle">TITLE</li>
+            <li class="toseeyear">YEAR</li>
+            <li class="toseegenre">GENRE</li>
+        </ol>
+        <ol id="alltoseelist">
+        </ol>
+
+
+    </main>
+    <button id="addtosee"><img src="icons/icon-04.svg" alt="Add"></button>
+
+    <div id="formaddtosee">
+        <button id="closetosee"><img src="icons/Icon-05.svg" alt="Close"></button>
+        <label for="ntitle">Title</label>
+        <input type="text" name="ntitle" id="formtitletosee">
+        <button id="random">Random</button>
+        <button id="donetosee"><img src="icons/Icon-06.svg" alt="Done"></button>
+        <p id="notfoundtosee">Sorry, that movie couldn't be found!</p>
+        <p id="warningtosee">Please fill out the title of the movie you wanna add</p>
+    </div>
+
+    <div id="formedittosee">
+        <button id="closeedittosee"><img src="icons/Icon-05.svg" alt="Close"></button>
+        <label for="ntitle">Title</label>
+        <input type="text" name="ntitle" id="edittitletosee">
+        <button id="doneedittosee"><img src="icons/Icon-06.svg" alt="Done"></button>
+        <p id="notfoundedittosee">Sorry, that movie couldn't be found!</p>
+        <p id="warningedittosee">Please fill out the title of the movie you wanna add</p>
+    </div>
+
+    <menu>
+        <button id="bstatics"><img src="icons/icon-01.svg" alt="Rewind"><span>Statics</span></button>
+        <button id="bwatched"><img src="icons/icon-02.svg" alt="Pause"><span>Watched</span></button>
+        <button id="bto-see"><img src="icons/icon-03.svg" alt="Next"><span>To-See</span></button>
+    </menu>
+    <script src="js/jquery-3.5.1.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
