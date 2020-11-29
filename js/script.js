@@ -63,7 +63,6 @@ $("#bto-see").click(function () {
 
 ////Revelar mais informação do filme visto
 $(document).on('mousedown', '.all', function (e) {
-	e.stopPropagation();
 	$(this).find(".extra").slideToggle(0);
 });
 
@@ -448,8 +447,6 @@ $("#umedit").click(function () {
 var pos = 0;
 //Quando se clica no filme
 $(document).on('mousedown', '.all', function (a) {
-	console.log("event start")
-	a.stopPropagation();
 	//Filme clicado muda de classe
 	$(this).addClass('allmoving');
 	$(this).removeClass('all');
@@ -464,7 +461,6 @@ $(document).on('mousedown', '.all', function (a) {
 	//Quando o rato se movimenta
 	$(document).on('mousemove', '.allmoving', function (e) {
 
-		e.stopPropagation();
 		//Esconder .extra dos filmes (informações extra)
 		$(this).find(".extra").hide();
 
@@ -862,7 +858,6 @@ $(document).on('mousedown', '.toseelist', function (a) {
 	//Mecânica slide
 	//Quando o rato se movimenta
 	$(document).on('mousemove', '.allmovingtosee', function (e) {
-		e.stopPropagation();
 		//variável largura da lista
 		var widthTS = $(".allmovingtosee").width();
 
