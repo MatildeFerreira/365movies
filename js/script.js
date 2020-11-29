@@ -775,7 +775,7 @@ $("#donetosee").click(function () {
 	if (title != "") {
 
 		//API omdB ->ir buscar o ano e o género através do título
-		var url = "http://www.omdbapi.com/?t=" + title + "&apikey=abeb758c";
+		var url = "https://www.omdbapi.com/?t=" + title + "&apikey=abeb758c";
 		$.getJSON(url,
 			function (json) {
 
@@ -821,7 +821,7 @@ $("#random").click(function () {
 	}
 
 	//acrescentar o random id ao url da API
-	var url = "http://www.omdbapi.com/?i=tt" + getRandom() + "&apikey=abeb758c";
+	var url = "https://www.omdbapi.com/?i=tt" + getRandom() + "&apikey=abeb758c";
 
 	$.getJSON(url,
 		function (json) {
@@ -955,7 +955,7 @@ $(document).on('mousedown touchstart', '.toseelist', function (a) {
 					if (titleeditedTS != "") {
 
 						//API omdB ->ir buscar o ano, o director e o género do filme
-						var url = "http://www.omdbapi.com/?t=" + titleeditedTS + "&apikey=abeb758c";
+						var url = "https://www.omdbapi.com/?t=" + titleeditedTS + "&apikey=abeb758c";
 						$.getJSON(url,
 							function (json) {
 								//se o filme for encontrado pela API
