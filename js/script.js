@@ -1,7 +1,10 @@
 //WB2 2020/21 - Matilde Ferreira - P2 - 365 MOVIES - SCRIPT
 
 //-- BOTÕES -- ÍNICIO --
-
+$(function () {
+	$("#formdate").datepicker({ dateFormat: 'yy-mm-dd' });
+	$("#dateedit").datepicker({ dateFormat: 'yy-mm-dd' });
+});
 //Botão login
 $('#login').on('click', function () {
 
@@ -63,7 +66,7 @@ $("#bto-see").click(function () {
 //PÁGINA WATCHED - INICIO
 
 ////Revelar mais informação do filme visto
-$(document).on('touchstart  mousedown', '.all', function (e) {
+$(document).on('click', '.all', function (e) {
 	$(this).find(".extra").slideToggle(0);
 });
 
@@ -235,7 +238,7 @@ $("#donewatched").click(function () {
 						"class": "extra"
 					}).append($('<ol/>', {
 						"class": "firstextra"
-					}).append("<li class='year'>Year</li>").append("<li class='director'>Director</li>").append("<li class='genre'>Genre</li>").append("<li class='platform'>Platform</li>")).append($('<ol/>', {
+					}).append("<li class='year'>Year</li>").append("<li class='director'>Director</li>").append("<li class='genre'>Genre</li>").append("<li class='platform'>Watched in</li>")).append($('<ol/>', {
 						"class": "listextra"
 					}).append("<li class='watchedyear'>" + json.Year + "</li>").append("<li class='watcheddirector'>" + json.Director + "</li>").append("<li class='watchedgenre'>" + json.Genre + "</li>").append("<li class='watchedplatform'>" + platform + "</li>")))).append($("<ol/>", {
 						"class": "after"
@@ -451,17 +454,17 @@ $(document).on('touchstart mousedown', '.all', function (a) {
 	//Filme clicado muda de classe
 	$(this).addClass('allmoving');
 	$(this).removeClass('all');
-	
+
 	//Posição da lista
 	var offset = $(".allmoving").offset();
 
 	//Update da posição do rato ou touch no momento do click, relativo à lista
 	if (window.matchMedia("(pointer: coarse)").matches) {
 		pos = a.changedTouches[0].pageX - offset.left;
+
 	} else {
 		pos = a.pageX - offset.left;
 	}
-
 
 	//Mecânica slide
 	//Quando o rato se movimenta
@@ -469,6 +472,7 @@ $(document).on('touchstart mousedown', '.all', function (a) {
 
 		//Esconder .extra dos filmes (informações extra)
 		$(this).find(".extra").hide();
+
 
 		//variável largura da lista
 		var width = $(".allmoving").width();
