@@ -1,6 +1,7 @@
 //WB2 2020/21 - Matilde Ferreira - P2 - 365 MOVIES - SCRIPT
 
 //-- BOTÕES -- ÍNICIO --
+
 //Botão login
 $('#login').on('click', function () {
 
@@ -62,7 +63,7 @@ $("#bto-see").click(function () {
 //PÁGINA WATCHED - INICIO
 
 ////Revelar mais informação do filme visto
-$(document).on('mousedown', '.all', function (e) {
+$(document).on('touchstart  mousedown', '.all', function (e) {
 	$(this).find(".extra").slideToggle(0);
 });
 
@@ -446,31 +447,43 @@ $("#umedit").click(function () {
 //Posição do click
 var pos = 0;
 //Quando se clica no filme
-$(document).on('mousedown', '.all', function (a) {
+$(document).on('touchstart mousedown', '.all', function (a) {
 	//Filme clicado muda de classe
 	$(this).addClass('allmoving');
 	$(this).removeClass('all');
-
+	
 	//Posição da lista
 	var offset = $(".allmoving").offset();
 
-	//Update da posição do rato no momento do click, relativo à lista
-	pos = a.pageX - offset.left;
+	//Update da posição do rato ou touch no momento do click, relativo à lista
+	if (window.matchMedia("(pointer: coarse)").matches) {
+		pos = a.changedTouches[0].pageX - offset.left;
+	} else {
+		pos = a.pageX - offset.left;
+	}
+
 
 	//Mecânica slide
 	//Quando o rato se movimenta
-	$(document).on('mousemove', '.allmoving', function (e) {
+	$(document).on('touchmove mousemove', '.allmoving', function (e) {
 
 		//Esconder .extra dos filmes (informações extra)
 		$(this).find(".extra").hide();
 
 		//variável largura da lista
 		var width = $(".allmoving").width();
+
 		//variável metade da largura da lista
 		var metade = parseInt(width / 2);
 
 		//variável para a nova posição da lista, relativa à posição do rato, menos a posição original da lista, menos a posição do click
-		var x = e.pageX - offset.left - pos;
+		var x;
+
+		if (window.matchMedia("(pointer: coarse)").matches) {
+			x = e.targetTouches[0].pageX - offset.left - pos;
+		} else {
+			x = e.pageX - offset.left - pos;
+		}
 
 		//variável da altura da lista em movimento
 		var height = $(".allmoving").height();
@@ -486,7 +499,8 @@ $(document).on('mousedown', '.all', function (a) {
 
 			//largura total da lista é igual a 100% mais largura do before (100% mais x)
 			$(this).parent().css({
-				width: 'calc(100% + ' + x + 'px)'
+				width: 'calc(100% + ' + x + 'px)',
+				overflow: 'hidden'
 			});
 
 			//largura da lista em movimento é igual a largura da lista estática (inicial)
@@ -692,7 +706,7 @@ $(document).on('mousedown', '.all', function (a) {
 	});
 });
 //Quando o rato é leventado
-$(document).mouseup(function () {
+$(document).on('mouseup touchend', function () {
 
 	//Filme em movimento volta a ser estático
 	$('.allmoving').addClass('all');
@@ -844,7 +858,7 @@ $("#closetosee").click(function () {
 //Posição do click
 var postosee = 0;
 //Quando se clica no filme
-$(document).on('mousedown', '.toseelist', function (a) {
+$(document).on('touchstart  mousedown', '.toseelist', function (a) {
 	//Filme clicado muda de classe
 	$(this).addClass('allmovingtosee');
 	$(this).removeClass('toseelist');
@@ -853,11 +867,16 @@ $(document).on('mousedown', '.toseelist', function (a) {
 	var offsettosee = $(".allmovingtosee").offset();
 
 	//Update da posição do rato no momento do click, relativo à lista
-	postosee = a.pageX - offsettosee.left;
+	if (window.matchMedia("(pointer: coarse)").matches) {
+		postosee = a.targetTouches[0].pageX - offsettosee.left;
+	} else {
+		postosee = a.pageX - offsettosee.left;
+	}
+
 
 	//Mecânica slide
 	//Quando o rato se movimenta
-	$(document).on('mousemove', '.allmovingtosee', function (e) {
+	$(document).on('touchmove mousemove', '.allmovingtosee', function (e) {
 		//variável largura da lista
 		var widthTS = $(".allmovingtosee").width();
 
@@ -865,7 +884,12 @@ $(document).on('mousedown', '.toseelist', function (a) {
 		var metadeTS = parseInt(widthTS / 2);
 
 		//variável para a nova posição da lista, relativa à posição do rato, menos a posição original da lista, menos a posição do click
-		var xTS = e.pageX - offsettosee.left - postosee;
+		var xTS;
+		if (window.matchMedia("(pointer: coarse)").matches) {
+			xTS = e.targetTouches[0].pageX - offsettosee.left - postosee;
+		} else {
+			xTS = e.pageX - offsettosee.left - postosee;
+		}
 
 		//variável da altura da lista em movimento
 		var heightTS = $(".allmovingtosee").height();
@@ -1055,7 +1079,7 @@ $(document).on('mousedown', '.toseelist', function (a) {
 	});
 });
 //Quando o rato é leventado
-$(document).on("mouseup", function () {
+$(document).on("touchend touchcancel mouseup", function () {
 
 	//Filme em movimento volta a ser estático
 	$('.allmovingtosee').addClass('toseelist');
