@@ -58,8 +58,8 @@ input:focus {
 
 menu {
 	position: fixed;
-	bottom:0;
-	height:75px;
+	bottom: 0;
+	height: 75px;
 	background-color: rgb(36, 255, 0);
 	width: 100vw;
 	padding-left: 6%;
@@ -93,15 +93,89 @@ menu span {
 	display: block;
 }
 
-
-input[type="date"i] {
-	font-family: Poppins;
+.ui-widget.ui-widget-content {
+	border: 1px solid rgb(0, 255, 0);
 }
 
-input::-webkit-calendar-picker-indicator:hover {
-	filter: invert(1);
-	opacity: 0.6;
+.ui-corner-all {
+	border-radius: 0;
+}
+
+.ui-datepicker-prev,
+.ui-datepicker-next,
+.ui-icon,
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover,
+.ui-widget-content .ui-icon,
+.ui-state-hover,
+.ui-datepicker-next-hover,
+.ui-datepicker-prev-hover {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	text-align: center;
 	cursor: pointer;
+	background-image: url('../icons/icon-06.svg');
+	background-repeat: no-repeat;
+	cursor: pointer;
+	background-color: transparent;
+	box-sizing: border-box;
+	border: 0;
+}
+
+.ui-datepicker-prev {
+	transform: rotate(180deg);
+}
+
+.ui-datepicker {
+	font: 12pt 'Poppins', sans-serif;
+	background-color: white;
+}
+
+.ui-datepicker-header {
+	font-weight: 600;
+	background-color: white;
+	border: 0;
+	
+}
+
+.ui-datepicker th {
+	font-weight: 400;
+}
+
+.ui-datepicker td span,
+.ui-datepicker td a {
+	display: inline-block;
+	text-align: center;
+	width: 100%;
+	line-height: 30px;
+	color: black;
+	padding:0;
+}
+
+.ui-datepicker-calendar .ui-state-default {
+	background-color: white;
+	border: 0;
+}
+
+.ui-datepicker-calendar .ui-state-default:hover {
+	background-color: rgb(0, 255, 0);
+}
+
+.ui-datepicker-calendar .ui-state-active {
+	color: black;
+	border:1px solid rgb(0, 255, 0);
+	box-sizing:content-box;
+}
+
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+color:black;
+}
+
+input {
+	font-family: 'Poppins';
 }
 
 #cinco:hover,
@@ -402,7 +476,7 @@ ol.firstextra li {
 #closetosee,
 #editclose,
 #closeedittosee,
-#learnmoreclose{
+#learnmoreclose {
 	background-color: transparent;
 	border: 0;
 	position: absolute;
@@ -557,19 +631,23 @@ p.label {
 	width: 80%;
 
 }
-#learnmore{
-	height:230px;
+
+#learnmore {
+	height: 230px;
 }
+
 #learnmore h3 {
 	margin-top: 0;
 	margin-bottom: 20px;
 }
-#learnmore p{
-	font-size:14px;
+
+#learnmore p {
+	font-size: 14px;
 	line-height: 20px;
 }
-#learnmore span{
-	width:50px;
+
+#learnmore span {
+	width: 50px;
 	display: inline-block;
 }
 
