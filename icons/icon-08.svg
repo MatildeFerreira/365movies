@@ -12,9 +12,6 @@
 	.st6{fill:#1D1D1B;}
 	.st7{fill:#00FF00;}
 	.st8{fill:#C8C8C8;}
-	.st9{fill:none;}
-	.st10{font-family:'Poppins-Bold';}
-	.st11{font-size:27px;}
 </style>
 <g>
 	<g>
@@ -22,6 +19,7 @@
 			C21.1,9,7.7,22.4,7.7,38.8s13.4,29.8,29.8,29.8s29.8-13.4,29.8-29.8S54,9,37.5,9z"/>
 	</g>
 </g>
-<rect x="11.5" y="28.4" class="st9" width="52.2" height="20.8"/>
-<text transform="matrix(1 0 0 1 30.315 48.4)" class="st7 st10 st11">7</text>
+<g>
+	<path class="st7" d="M44.1,32.1l-6.8,16.3h-4.7l6.9-15.7h-8.4v-3.9h13V32.1z"/>
+</g>
 </svg>
