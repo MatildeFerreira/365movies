@@ -1,4 +1,5 @@
 /*WB2 2020/21 - Matilde Ferreira - P2 - 365 MOVIES - STYLE*/
+
 body {
 	font-family: 'Poppins';
 }
@@ -16,7 +17,7 @@ header {
 
 h1 {
 	font-weight: 700;
-	font-size: 27px;
+	font-size: 27.5px;
 	letter-spacing: -1px;
 	word-spacing: 2px;
 	display: contents;
@@ -25,7 +26,7 @@ h1 {
 h2 {
 	text-align: right;
 	font-weight: 300;
-	font-size: 27px;
+	font-size: 27.5px;
 	float: right;
 }
 
@@ -34,7 +35,7 @@ form {
 }
 
 label {
-	font-weight: 600px;
+	font-weight: 600;
 	font-size: 15px;
 }
 
@@ -52,11 +53,15 @@ label {
 	width: 100%;
 }
 
+input {
+	font-family: 'Poppins';
+}
+
 input:focus {
 	outline: none;
 }
 
-menu {
+#menu {
 	position: fixed;
 	bottom: 0;
 	height: 75px;
@@ -68,12 +73,12 @@ menu {
 	box-sizing: border-box;
 }
 
-menu img {
+#menu img {
 	width: 60px;
 	margin-top: 10px;
 }
 
-menu button {
+#menu button {
 	font-family: 'Poppins';
 	font-weight: 400;
 	font-size: 12px;
@@ -89,10 +94,11 @@ button {
 	outline: 0;
 }
 
-menu span {
+#menu span {
 	display: block;
 }
 
+/* DATE PICKER */
 .ui-widget.ui-widget-content {
 	border: 1px solid rgb(0, 255, 0);
 }
@@ -136,7 +142,7 @@ menu span {
 	font-weight: 600;
 	background-color: white;
 	border: 0;
-	
+
 }
 
 .ui-datepicker th {
@@ -150,7 +156,7 @@ menu span {
 	width: 100%;
 	line-height: 30px;
 	color: black;
-	padding:0;
+	padding: 0;
 }
 
 .ui-datepicker-calendar .ui-state-default {
@@ -164,18 +170,14 @@ menu span {
 
 .ui-datepicker-calendar .ui-state-active {
 	color: black;
-	border:1px solid rgb(0, 255, 0);
-	box-sizing:content-box;
+	border: 1px solid rgb(0, 255, 0);
+	box-sizing: content-box;
 }
 
 .ui-state-highlight,
 .ui-widget-content .ui-state-highlight,
 .ui-widget-header .ui-state-highlight {
-color:black;
-}
-
-input {
-	font-family: 'Poppins';
+	color: black;
 }
 
 #cinco:hover,
@@ -205,6 +207,7 @@ input {
 	position: absolute;
 	bottom: 125px;
 	right: 6%;
+	z-index: 10;
 }
 
 main {
@@ -323,7 +326,6 @@ ol.firstextra {
 
 }
 
-
 .director,
 .watcheddirector {
 	width: 30%;
@@ -403,6 +405,7 @@ ol.firstextra li {
 	box-sizing: border-box;
 	background-color: rgb(36, 255, 0);
 	display: none;
+	z-index: 10;
 }
 
 .star {
@@ -411,7 +414,7 @@ ol.firstextra li {
 
 #formaddtosee,
 #formedittosee {
-	height: 165px;
+	height: 210px;
 }
 
 #warning,
@@ -485,7 +488,6 @@ ol.firstextra li {
 	width: 40px;
 	height: 25px;
 }
-
 
 #random {
 	font-family: 'Poppins';
@@ -672,7 +674,6 @@ p.label {
 }
 
 @media only screen and (min-width: 451px) {
-
 	h1,
 	h2 {
 		font-size: 35px;
@@ -686,7 +687,7 @@ p.label {
 		width: 60vw;
 	}
 
-	menu {
+	#menu {
 		padding-left: 20%;
 		padding-right: 19%;
 	}
