@@ -1,4 +1,5 @@
 <!--WB2 2020/21 - Matilde Ferreira - P2 - 365 MOVIES - WATCHED-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,19 +33,21 @@
 		<ol class="allmovies">
 		</ol>
 	</main>
+	
 	<button id="addwatched"><img src="icons/icon-04.svg" alt="Add"></button>
+	
 	<div id="formaddwatched">
 		<button id="close"><img src="icons/icon-05.svg" alt="Close"></button>
-		<label for="ndate">Date</label>
+		<label for="formdate">Date</label>
 		<input type="text" name="ndate" id="formdate">
 
-		<label for="ntitle">Title</label>
+		<label for="formtitle">Title</label>
 		<input type="text" name="ntitle" id="formtitle">
 
-		<label for="nplatform">Watched in</label>
+		<label for="formplatform">Watched in</label>
 		<input type="text" name="nplatform" id="formplatform">
 
-		<label for="nreview">Review</label>
+		<label>Review</label>
 		<p class="stars"><span class="starempty" id="um">☆</span><span class="starempty" id="dois">☆</span><span class="starempty" id="tres">☆</span><span class="starempty" id="quatro">☆</span><span class="starempty" id="cinco">☆</span></p>
 
 		<button id="donewatched"><img src="icons/icon-06.svg" alt="Done"></button>
@@ -54,16 +57,16 @@
 
 	<div id="formeditwatched">
 		<button id="editclose"><img src="icons/icon-05.svg" alt="Close"></button>
-		<label for="ndate">Date</label>
+		<label for="dateedit">Date</label>
 		<input type="text" name="ndate" id="dateedit">
 
-		<label for="ntitle">Title</label>
+		<label for="titleedit">Title</label>
 		<input type="text" name="ntitle" id="titleedit">
 
-		<label for="nplatform">Watched in</label>
+		<label for="platformedit">Watched in</label>
 		<input type="text" name="nplatform" id="platformedit">
 
-		<label for="nreview">Review</label>
+		<label>Review</label>
 		<p class="starsedit"><span class="starempty" id="umedit">☆</span><span class="starempty" id="doisedit">☆</span><span class="starempty" id="tresedit">☆</span><span class="starempty" id="quatroedit">☆</span><span class="starempty" id="cincoedit">☆</span></p>
 
 		<button id="doneeditwatched"><img src="icons/icon-06.svg" alt="Done"></button>
@@ -71,11 +74,11 @@
 		<p id="warningedit">Please fill out all the parameters</p>
 	</div>
 
-	<menu>
+	<div id="menu">
 		<button id="bstatics"><img src="icons/icon-01.svg" alt="Rewind"><span>Statics</span></button>
 		<button id="bwatched"><img src="icons/icon-02.svg" alt="Pause"><span>Watched</span></button>
 		<button id="bto-see"><img src="icons/icon-03.svg" alt="Next"><span>To-See</span></button>
-	</menu>
+	</div>
 	<script src="js/jquery-3.5.1.min.js"></script>
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="js/script.js"></script>

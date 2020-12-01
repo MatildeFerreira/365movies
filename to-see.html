@@ -1,4 +1,5 @@
 <!--WB2 2020/21 - Matilde Ferreira - P2 - 365 MOVIES - TO-SEE-->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,7 +37,7 @@
 
 	<div id="formaddtosee">
 		<button id="closetosee"><img src="icons/icon-05.svg" alt="Close"></button>
-		<label for="ntitle">Title</label>
+		<label for="formtitletosee">Title</label>
 		<input type="text" name="ntitle" id="formtitletosee">
 		<button id="random">Random</button>
 		<button id="donetosee"><img src="icons/icon-06.svg" alt="Done"></button>
@@ -46,18 +47,19 @@
 
 	<div id="formedittosee">
 		<button id="closeedittosee"><img src="icons/icon-05.svg" alt="Close"></button>
-		<label for="ntitle">Title</label>
+		<label for="edittitletosee">Title</label>
 		<input type="text" name="ntitle" id="edittitletosee">
 		<button id="doneedittosee"><img src="icons/icon-06.svg" alt="Done"></button>
 		<p id="notfoundedittosee">Sorry, that movie couldn't be found!</p>
 		<p id="warningedittosee">Please fill out the title of the movie you wanna add</p>
 	</div>
 
-	<menu>
+	<div id="menu">
 		<button id="bstatics"><img src="icons/icon-01.svg" alt="Rewind"><span>Statics</span></button>
 		<button id="bwatched"><img src="icons/icon-02.svg" alt="Pause"><span>Watched</span></button>
 		<button id="bto-see"><img src="icons/icon-03.svg" alt="Next"><span>To-See</span></button>
-	</menu>
+	</div>
 	<script src="js/jquery-3.5.1.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="js/script.js"></script>
 </body></html>
