@@ -2,33 +2,43 @@
 
 //-- BOTÕES -- ÍNICIO --
 $(function () {
-	$("#formdate").datepicker({ dateFormat: 'yy-mm-dd' });
-	$("#dateedit").datepicker({ dateFormat: 'yy-mm-dd' });
+	$("#formdate").datepicker({
+		dateFormat: 'yy-mm-dd'
+	});
+	$("#dateedit").datepicker({
+		dateFormat: 'yy-mm-dd'
+	});
 });
+
+let MoviesWatched;
+let MoviesToSee;
+let Usernames;
+
+//-- BOTÕES -- ÍNICIO --
 //Botão login
 $('#login').on('click', function () {
 
 	//ler a string existente de usernames
-	var Usernames = localStorage.getItem('StringUsernames');
+	Usernames = localStorage.getItem('StringUsernames');
 	//novo username
-	var newUsername = $('#username').val();
+	let newUsername = $('#username').val();
 
 	//se já existir usernames no array
 	if (Usernames != null) {
 		//converter a string em array
-		var allUsernames = JSON.parse(Usernames);
+		Usernames = JSON.parse(Usernames);
 
 		//verificar se já existe o username inserido
-		var repeated = allUsernames.filter(function (a) {
+		var repeated = Usernames.filter(function (a) {
 			return a.myUsername == newUsername
 		}).length;
 
 		//se ainda não existir, guardar novo username
 		if (!repeated) {
-			allUsernames.push({
+			Usernames.push({
 				"myUsername": newUsername
 			});
-			localStorage.setItem('StringUsernames', JSON.stringify(allUsernames));
+			localStorage.setItem('StringUsernames', JSON.stringify(Usernames));
 
 			//se for repetido, não guardar nada
 		} else {}
@@ -36,11 +46,11 @@ $('#login').on('click', function () {
 		//se não existir usernames no array
 	} else {
 		//criar array
-		var allUsernames = [{
+		 Usernames = [{
 			"myUsername": newUsername
         }];
 		//transformar o array em string
-		localStorage.setItem('StringUsernames', JSON.stringify(allUsernames));
+		localStorage.setItem('StringUsernames', JSON.stringify(Usernames));
 	}
 
 	//ir para a página "watched"
@@ -64,6 +74,41 @@ $("#bto-see").click(function () {
 //-- BOTÕES -- FIM --
 
 //PÁGINA WATCHED - INICIO
+// no load da página verifica se já existem filmes guardados
+$(function () {
+	// verifica o local storage
+	MoviesWatched = localStorage.getItem("StringMoviesWatched");
+	//se já houver filmes
+	if (MoviesWatched != null) {
+		// converte os dados de TEXTO em JSON para objeto JS na memória
+		MoviesWatched = JSON.parse(MoviesWatched);
+
+		$.each(MoviesWatched, function (index, value) {
+			var removeyear = value.newMovie.date.substring(5, value.newMovie.date.length);
+			($("<ol/>", {
+				"class": "allbeforeafter"
+			})).appendTo(".allmovies").append($("<ol/>", {
+				"class": "before"
+			}).append($("<li> Edit </li>"))).append($("<ol/>", {
+				"class": "all"
+			}).append($('<ol/>', {
+				"class": "list"
+			}).append("<li class='watcheddate'>" + value.newMovie.date + "</li>").append("<li class='watcheddateMB'>" + removeyear + "</li>").append("<li class='watchedtitle'>" + value.newMovie.title + "</li>").append("<li class='watchedreview'>" + value.newMovie.review + "</li>")).append($('<ol/>', {
+				"class": "extra"
+			}).append($('<ol/>', {
+				"class": "firstextra"
+			}).append("<li class='year'>Year</li>").append("<li class='director'>Director</li>").append("<li class='genre'>Genre</li>").append("<li class='platform'>Watched in</li>")).append($('<ol/>', {
+				"class": "listextra"
+			}).append("<li class='watchedyear'>" + value.newMovie.year + "</li>").append("<li class='watcheddirector'>" + value.newMovie.director + "</li>").append("<li class='watchedgenre'>" + value.newMovie.genre + "</li>").append("<li class='watchedplatform'>" + value.newMovie.platform + "</li>")))).append($("<ol/>", {
+				"class": "after"
+			}).append($("<li> DELETE </li>")));
+		});
+
+
+	} else {
+
+	}
+});
 
 ////Revelar mais informação do filme visto
 $(document).on('click', '.all', function (e) {
@@ -225,6 +270,55 @@ $("#donewatched").click(function () {
 				//se o filme for encontrado pela API
 				if (json.Title != undefined) {
 
+					//ler a string existente de filmes
+					MoviesWatched = localStorage.getItem('StringMoviesWatched');
+
+					//dados novo filme
+					const TitleSave = json.Title
+					const YearSave = json.Year
+					const DirectorSave = json.Director
+					const GenreSave = json.Genre
+
+					//se já houver filmes no array
+					if (MoviesWatched != null) {
+
+						//converter a string em array
+						var allMoviesWatched = JSON.parse(MoviesWatched);
+
+						//acrescentar filme novo
+						allMoviesWatched.push({
+							"newMovie": {
+								date: date,
+								title: TitleSave,
+								review: stars,
+								year: YearSave,
+								director: DirectorSave,
+								genre: GenreSave,
+								platform: platform
+							}
+						});
+
+						localStorage.setItem('StringMoviesWatched', JSON.stringify(allMoviesWatched));
+
+
+					} else {
+						//criar array
+						var allMoviesWatched = [{
+							"newMovie": {
+								date: date,
+								title: TitleSave,
+								review: stars,
+								year: YearSave,
+								director: DirectorSave,
+								genre: GenreSave,
+								platform: platform
+							}
+					}];
+						localStorage.setItem('StringMoviesWatched', JSON.stringify(allMoviesWatched));
+					}
+
+
+
 					//Append estrutura + dados novos do input/da api
 					($("<ol/>", {
 						"class": "allbeforeafter"
@@ -271,8 +365,9 @@ $("#donewatched").click(function () {
 					$('#cinco').addClass('starempty');
 					$(".starempty").text('☆');
 
-					//se o filme não for encontrado
-				} else {
+				}
+				//se o filme não for encontrado
+				else {
 					//Aviso de parametros desaparece
 					$("#warning").fadeOut(0);
 					//Surge aviso de filme não encontrado
@@ -319,7 +414,6 @@ $("#close").click(function () {
 
 });
 //---MENU ADICIONAR FILME VISTO -- FIM
-
 
 //EDITAR FILMES PÁGINA WATCHED
 
@@ -469,10 +563,8 @@ $(document).on('touchstart mousedown', '.all', function (a) {
 	//Mecânica slide
 	//Quando o rato se movimenta
 	$(document).on('touchmove mousemove', '.allmoving', function (e) {
-
 		//Esconder .extra dos filmes (informações extra)
 		$(this).find(".extra").hide();
-
 
 		//variável largura da lista
 		var width = $(".allmoving").width();
@@ -494,7 +586,6 @@ $(document).on('touchstart mousedown', '.all', function (a) {
 
 		//se o slide for para a esquerda
 		if (x => 0) {
-
 			//caso se tenha feito slide right primeiro), apagar o after
 			$(".after").css({
 				width: '0px',
@@ -550,107 +641,11 @@ $(document).on('touchstart mousedown', '.all', function (a) {
 				//botão de adicionar filmes desaparece
 				$("#addwatched").fadeOut(0);
 
-				//Variáveis da estrutura inicial do filme
-				var dateAT = $(this).find(".watcheddate");
-				var titleAT = $(this).find(".watchedtitle");
-				var platformAT = $(this).find(".watchedplatform");
-				var yearAT = $(this).find(".watchedyear");
-				var genreAT = $(this).find(".watchedgenre");
-				var directorAT = $(this).find(".watcheddirector");
-				var starsAT = $(this).find(".watchedreview");
-
-				//Variáveis com as informações iniciais do filme
-				var dateedit = $(this).find(".watcheddate").text();
-				var titleedit = $(this).find(".watchedtitle").text();
-				var platformedit = $(this).find(".watchedplatform").text();
-
-				//Valores iniciais do formulário são os valores do filme a ser editado
-				$('#dateedit').val(dateedit);
-				$('#titleedit').val(titleedit);
-				$('#platformedit').val(platformedit);
-
-				//Ao clicar no botão adicionar filme visto
-				$("#doneeditwatched").click(function () {
-
-					//atualização do conteudo
-					var titleedited = $('#titleedit').val();
-					var starsedit = $("p.starsedit").text();
-
-					//verificar preenchimento da review (se pelo menos a primeira estrela estiver starfull)
-					var reviewedit = $('#umedit').hasClass('starfull');
-
-					//se todos os parametros forem respondidos
-					if (dateedit != "" && titleedited != "" && platformedit != "" && reviewedit != false) {
-
-						//API omdB ->ir buscar o ano, o director e o género do filme
-						var url = "https://www.omdbapi.com/?t=" + titleedited + "&apikey=abeb758c";
-						$.getJSON(url,
-							function (json) {
-
-								//se o filme for encontrado pela API
-								if (json.Title != undefined) {
-
-									//Preenchimento da estrutura inicial com o novo input
-									dateAT.text($('#dateedit').val());
-
-									titleAT.text(json.Title);
-									platformAT.text($('#platformedit').val());
-									yearAT.text(json.Year);
-									genreAT.text(json.Genre);
-									directorAT.text(json.Director);
-									starsAT.text(starsedit);
-
-									//Menu desaparece
-									$("#formeditwatched").fadeOut(50);
-									//Botão adicionar filme surge
-									$("#addwatched").fadeIn(50);
-
-									//Restart dos avisos 
-									$("#warningedit").fadeOut(0);
-									$("#notfoundedit").fadeOut(0);
-
-									//restart estrelas
-									$('#umedit').removeClass('starfull');
-									$('#umedit').addClass('starempty');
-									$('#doisedit').removeClass('starfull');
-									$('#doisedit').addClass('starempty');
-									$('#tresedit').removeClass('starfull');
-									$('#tresedit').addClass('starempty');
-									$('#quatroedit').removeClass('starfull');
-									$('#quatroedit').addClass('starempty');
-									$('#cincoedit').removeClass('starfull');
-									$('#cincoedit').addClass('starempty');
-									$(".starempty").text('☆');
-
-									//restart da estrutura inicial
-									dateAT = "";
-									titleAT = "";
-									platformAT = "";
-									yearAT = "";
-									genreAT = "";
-									directorAT = "";
-									starsAT = "";
-									//se o filme não for encontrado
-								} else {
-									//Aviso dos parametros desaparece
-									$("#warningedit").fadeOut(0);
-									//Surge aviso de filme não encontrado
-									$("#notfoundedit").fadeIn(100).fadeOut(200).fadeIn(200);
-								}
-							});
-
-						//se nem todos os parametros forem respondidos aviso
-					} else {
-						//Aviso de filme não encontrado desaparece
-						$("#notfoundedit").fadeOut(0);
-						//Surge aviso de paramentros não respondidos
-						$("#warningedit").fadeIn(100).fadeOut(200).fadeIn(200);
-					};
-
-				});
+				editWatched();
 
 			}
 		}
+
 
 		//se o slide for para a direita
 		if (x <= 0) {
@@ -695,6 +690,8 @@ $(document).on('touchstart mousedown', '.all', function (a) {
 			});
 
 			if (-x >= metade) {
+				let titleremoved = $(".allmoving").find(".watchedtitle").text();
+
 				$(".allmoving").remove();
 
 				//after desaparece
@@ -705,10 +702,159 @@ $(document).on('touchstart mousedown', '.all', function (a) {
 				$(".after").children().css({
 					display: 'none'
 				});
+
+
+				//atualizar local storage
+				MoviesWatched = localStorage.getItem("StringMoviesWatched");
+
+				MoviesWatched = JSON.parse(MoviesWatched);
+
+				var index;
+
+				MoviesWatched.some(function (value, i) {
+					if (value.newMovie.title == titleremoved) {
+						index = i;
+
+						//remover filme
+						MoviesWatched.splice(index, 1);
+						localStorage.setItem('StringMoviesWatched', JSON.stringify(MoviesWatched));
+
+					}
+				});
 			}
 		}
 	});
 });
+
+function editWatched() {
+
+	//objeto com estrutura original do filme
+	let editedmovie = {
+		title: $(".allmoving").find(".watchedtitle"),
+		date: $(".allmoving").find(".watcheddate"),
+		review: $(".allmoving").find(".watchedreview"),
+		year: $(".allmoving").find(".watchedyear"),
+		director: $(".allmoving").find(".watcheddirector"),
+		genre: $(".allmoving").find(".watchedgenre"),
+		platform: $(".allmoving").find(".watchedplatform")
+	}
+
+	//Valores iniciais do formulário são os valores do filme original
+	$('#dateedit').val(editedmovie.date.text());
+	$('#titleedit').val(editedmovie.title.text());
+	$('#platformedit').val(editedmovie.platform.text());
+
+	//Ao clicar no botão adicionar filme visto
+	$("#doneeditwatched").one('click', function () {
+
+		//verificar se pelo menos uma estrela foi preenchida
+		let reviewedit = $('#umedit').hasClass('starfull');
+
+		//novo input estrelas
+		let starsedit = $("p.starsedit").text();
+
+		//se todos os parametros forem respondidos
+		if ($('#dateedit').val() != "" && $('#titleedit').val() != "" && $('#platformedit').val() != "" && reviewedit != false) {
+
+
+			//API omdB ->ir buscar o ano, o director e o género do filme
+			var url = "https://www.omdbapi.com/?t=" + $('#titleedit').val() + "&apikey=abeb758c";
+			$.getJSON(url,
+				function (json) {
+
+					//se o filme for encontrado pela API
+					if (json.Title != undefined) {
+
+
+						//atualizar local storage
+						MoviesWatched = localStorage.getItem("StringMoviesWatched");
+
+						MoviesWatched = JSON.parse(MoviesWatched);
+
+						let index;
+						MoviesWatched.some(function (value, i) {
+							if (value.newMovie.title == editedmovie.title.text()) {
+
+								newMovie = {
+									"newMovie": {
+										date: $('#dateedit').val(),
+										title: json.Title,
+										review: starsedit,
+										year: json.Year,
+										director: json.Director,
+										genre: json.Genre,
+										platform: $('#platformedit').val()
+									}
+								};
+
+								index = i;
+
+								//remover filme
+								MoviesWatched.splice(index, 1);
+
+								//filme edita no lugar de antes de ser editado
+								MoviesWatched.splice(index, 1, newMovie);
+
+								localStorage.setItem('StringMoviesWatched', JSON.stringify(MoviesWatched));
+
+							}
+						});
+
+
+
+						//preencher o filme com os novos valores
+						editedmovie.title.text(json.Title);
+						editedmovie.date.text($('#dateedit').val());
+						editedmovie.review.text(starsedit);
+						editedmovie.year.text(json.Year);
+						editedmovie.director.text(json.Director);
+						editedmovie.genre.text(json.Genre);
+						editedmovie.platform.text($('#platformedit').val());
+
+						//Menu desaparece
+						$("#formeditwatched").fadeOut(50);
+						//Botão adicionar filme surge
+						$("#addwatched").fadeIn(50);
+
+						//Restart dos avisos 
+						$("#warningedit").fadeOut(0);
+						$("#notfoundedit").fadeOut(0);
+
+						//restart estrelas
+						$('#umedit').removeClass('starfull');
+						$('#umedit').addClass('starempty');
+						$('#doisedit').removeClass('starfull');
+						$('#doisedit').addClass('starempty');
+						$('#tresedit').removeClass('starfull');
+						$('#tresedit').addClass('starempty');
+						$('#quatroedit').removeClass('starfull');
+						$('#quatroedit').addClass('starempty');
+						$('#cincoedit').removeClass('starfull');
+						$('#cincoedit').addClass('starempty');
+						$(".starempty").text('☆');
+
+
+
+						//se o filme não for encontrado
+					} else {
+						//Aviso dos parametros desaparece
+						$("#warningedit").fadeOut(0);
+						//Surge aviso de filme não encontrado
+						$("#notfoundedit").fadeIn(100).fadeOut(200).fadeIn(200);
+					}
+				});
+
+			//se nem todos os parametros forem respondidos aviso
+		} else {
+			//Aviso de filme não encontrado desaparece
+			$("#notfoundedit").fadeOut(0);
+			//Surge aviso de paramentros não respondidos
+			$("#warningedit").fadeIn(100).fadeOut(200).fadeIn(200);
+		};
+
+	});
+};
+
 //Quando o rato é leventado
 $(document).on('mouseup touchend', function () {
 
@@ -768,6 +914,28 @@ $("#editclose").click(function () {
 
 
 //PÁGINA TO-SEEE - INICIO
+// no load da página verifica se já existem filmes guardados
+$(function () {
+	// verifica o local storage
+	MoviesToSee = localStorage.getItem("StringMoviesToSee");
+	//se já houver filmes
+	if (MoviesToSee != null) {
+		// converte os dados de TEXTO em JSON para objeto JS na memória
+		MoviesToSee = JSON.parse(MoviesToSee);
+
+		$.each(MoviesToSee, function (index, value) {
+
+			$("<ol/>", {
+				"class": "beforeafteralltoseelist"
+			}).appendTo("#alltoseelist").append("<ol class= 'beforetosee'><li>EDIT</li></ol>").append($("<ol/>", {
+				"class": "toseelist"
+			}).append("<li class='toseetitle'>" + value.newMovieTS.title + "</li>").append("<li class='toseeyear'>" + value.newMovieTS.year + "</li>").append("<li class='toseegenre'>" + value.newMovieTS.genre + "</li>")).append("<ol class= 'aftertosee'><li>DELETE</li></ol>")
+		});
+
+	} else {
+
+	}
+});
 
 //---MENU ADICIONAR FILME PARA VER -- INICIO
 
@@ -795,6 +963,47 @@ $("#donetosee").click(function () {
 
 				//se o título do filme for encotrado
 				if (json.Title != undefined) {
+
+					//ler a string existente de filmes
+					MoviesToSee = localStorage.getItem('StringMoviesToSee');
+
+					//dados novo filme
+					const TitleSaveTS = json.Title
+					const YearSaveTS = json.Year
+					const GenreSaveTS = json.Genre
+
+					//se já houver filmes no array
+					if (MoviesToSee != null) {
+
+						//converter a string em array
+						MoviesToSee = JSON.parse(MoviesToSee);
+
+						//acrescentar filme novo
+						MoviesToSee.push({
+							"newMovieTS": {
+								title: TitleSaveTS,
+								year: YearSaveTS,
+								genre: GenreSaveTS,
+
+							}
+						});
+
+						localStorage.setItem('StringMoviesToSee', JSON.stringify(MoviesToSee));
+
+
+					} else {
+						//criar array
+						var MoviesToSee = [{
+							"newMovieTS": {
+								title: TitleSaveTS,
+								year: YearSaveTS,
+								genre: GenreSaveTS,
+							}
+					}];
+						localStorage.setItem('StringMoviesToSee', JSON.stringify(MoviesToSee));
+					}
+
+
 					$("<ol/>", {
 						"class": "beforeafteralltoseelist"
 					}).appendTo("#alltoseelist").append("<ol class= 'beforetosee'><li>EDIT</li></ol>").append($("<ol/>", {
@@ -819,6 +1028,7 @@ $("#donetosee").click(function () {
 		//se nem todos os parametros forem respondidos aviso
 	} else {
 		$("#warningtosee").fadeIn(100).fadeOut(200).fadeIn(200);
+		$("#notfoundtosee").fadeOut(0);
 	};
 
 });
@@ -957,70 +1167,7 @@ $(document).on('touchstart  mousedown', '.toseelist', function (a) {
 				//botão de adicionar filmes desaparece
 				$("#addtosee").fadeOut(0);
 
-				//Variáveis da estrutura inicial do filme
-				var titleTS = $(this).find(".toseetitle");
-				var yearTS = $(this).find(".toseeyear");
-				var genreTS = $(this).find(".toseegenre");
-
-				//Variáveis com as informações iniciais do filme
-				var titleeditTS = $(this).find(".toseetitle").text();
-
-				//Valores iniciais do formulário são os valores do filme a ser editado
-				$('#edittitletosee').val(titleeditTS);
-
-				//Ao clicar no botão adicionar filme visto
-				$("#doneedittosee").click(function () {
-
-					//atualização do conteudo
-					var titleeditedTS = $('#edittitletosee').val();
-
-					//se o titulo for respondidos
-					if (titleeditedTS != "") {
-
-						//API omdB ->ir buscar o ano, o director e o género do filme
-						var url = "https://www.omdbapi.com/?t=" + titleeditedTS + "&apikey=abeb758c";
-						$.getJSON(url,
-							function (json) {
-								//se o filme for encontrado pela API
-								if (json.Title != undefined) {
-
-									//Preenchimento da estrutura inicial com o novo input
-									titleTS.text(json.Title);
-									yearTS.text(json.Year);
-									genreTS.text(json.Genre);
-
-									//Menu desaparece
-									$("#formedittosee").fadeOut(50);
-									//Botão adicionar filme surge
-									$("#addtosee").fadeIn(50);
-
-									//Restart dos avisos 
-									$("#warningedittosee").fadeOut(0);
-									$("#notfoundedittosee").fadeOut(0);
-
-									//restart da estrutura inicial
-									titleTS = "";
-									yearTS = "";
-									genreTS = "";
-
-									//se o filme não for encontrado
-								} else {
-									//Aviso dos parametros desaparece
-									$("#warningedittosee").fadeOut(0);
-									//Surge aviso de filme não encontrado
-									$("#notfoundedittosee").fadeIn(100).fadeOut(200).fadeIn(200);
-								}
-							});
-
-						//se nem todos os parametros forem respondidos aviso
-					} else {
-						//Aviso de filme não encontrado desaparece
-						$("#notfoundedittosee").fadeOut(0);
-						//Surge aviso de paramentros não respondidos
-						$("#warningedittosee").fadeIn(100).fadeOut(200).fadeIn(200);
-					};
-
-				});
+				editToSee();
 
 			}
 		}
@@ -1068,6 +1215,7 @@ $(document).on('touchstart  mousedown', '.toseelist', function (a) {
 			});
 
 			if (-xTS >= metadeTS) {
+				let titleTSremoved = $(".allmovingtosee").find(".toseetitle").text();
 				$(".allmovingtosee").remove();
 
 				//after desaparece
@@ -1078,10 +1226,120 @@ $(document).on('touchstart  mousedown', '.toseelist', function (a) {
 				$(".aftertosee").children().css({
 					display: 'none'
 				});
+
+				//atualizar local storage
+				MoviesToSee = localStorage.getItem("StringMoviesToSee");
+
+				MoviesToSee = JSON.parse(MoviesToSee);
+
+				var index;
+
+				MoviesToSee.some(function (value, i) {
+					if (value.newMovieTS.title == titleTSremoved) {
+						index = i;
+
+						//remover filme
+						MoviesToSee.splice(index, 1);
+						localStorage.setItem('StringMoviesToSee', JSON.stringify(MoviesToSee));
+
+					}
+				});
 			}
 		}
 	});
 });
+
+function editToSee() {
+	//objeto com estrutura original do filme
+	let editedmovieTS = {
+		title: $(".allmovingtosee").find(".toseetitle"),
+		year: $(".allmovingtosee").find(".toseeyear"),
+		genre: $(".allmovingtosee").find(".toseegenre"),
+	}
+
+	//Valores iniciais do formulário são os valores do filme a ser editado
+	$('#edittitletosee').val(editedmovieTS.title.text());
+
+	//Ao clicar no botão adicionar filme visto
+	$("#doneedittosee").one('click', function () {
+
+
+		//se o titulo for respondidos
+		if ($('#edittitletosee').val() != "") {
+
+			//API omdB ->ir buscar o ano, o director e o género do filme
+			var url = "https://www.omdbapi.com/?t=" + $('#edittitletosee').val() + "&apikey=abeb758c";
+			$.getJSON(url,
+				function (json) {
+					//se o filme for encontrado pela API
+					if (json.Title != undefined) {
+
+						//atualizar local storage
+						MoviesToSee = localStorage.getItem("StringMoviesToSee");
+
+						MoviesToSee = JSON.parse(MoviesToSee);
+
+						let index;
+						MoviesToSee.some(function (value, i) {
+							if (value.newMovieTS.title == editedmovieTS.title.text()) {
+
+								newMovieTS = {
+									"newMovieTS": {
+										title: json.Title,
+										year: json.Year,
+										genre: json.Genre,
+									}
+								};
+
+								index = i;
+
+								//remover filme
+								MoviesToSee.splice(index, 1);
+
+								//filme edita no lugar de antes de ser editado
+								MoviesToSee.splice(index, 1, newMovieTS);
+
+								localStorage.setItem('StringMoviesToSee', JSON.stringify(MoviesToSee));
+
+							}
+						});
+
+						//Preenchimento da estrutura inicial com o novo input
+						editedmovieTS.title.text(json.Title);
+						editedmovieTS.year.text(json.Year);
+						editedmovieTS.genre.text(json.Genre);
+
+						//Menu desaparece
+						$("#formedittosee").fadeOut(50);
+						//Botão adicionar filme surge
+						$("#addtosee").fadeIn(50);
+
+						//Restart dos avisos 
+						$("#warningedittosee").fadeOut(0);
+						$("#notfoundedittosee").fadeOut(0);
+
+
+
+						//se o filme não for encontrado
+					} else {
+						//Aviso dos parametros desaparece
+						$("#warningedittosee").fadeOut(0);
+						//Surge aviso de filme não encontrado
+						$("#notfoundedittosee").fadeIn(100).fadeOut(200).fadeIn(200);
+					}
+				});
+
+			//se nem todos os parametros forem respondidos aviso
+		} else {
+			//Aviso de filme não encontrado desaparece
+			$("#notfoundedittosee").fadeOut(0);
+			//Surge aviso de paramentros não respondidos
+			$("#warningedittosee").fadeIn(100).fadeOut(200).fadeIn(200);
+		};
+
+	});
+
+}
 //Quando o rato é leventado
 $(document).on("touchend touchcancel mouseup", function () {
 
@@ -1135,9 +1393,11 @@ $("#closeedittosee").click(function () {
 	$("#warningedittosee").fadeOut(0);
 });
 
+//PÁGINA TO-SEEE - FIM
 
 //---MENU EDITAR FILME PARA VER -- FIM
 
+//PÁGINA STATICS - INICIO
 //revelar learn more
 $("#buttonlearnmore").click(function () {
 	$("#learnmore").fadeIn(0);
@@ -1148,4 +1408,4 @@ $("#learnmoreclose").click(function () {
 	$("#learnmore").fadeOut(0);
 });
 
-//PÁGINA TO-SEEE - FIM
+//PÁGINA STATICS - FIM
