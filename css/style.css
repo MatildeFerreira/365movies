@@ -30,6 +30,9 @@ h2 {
 	float: right;
 }
 
+#login{
+	cursor: pointer;
+}
 form {
 	margin-top: 50px;
 }
